@@ -110,12 +110,19 @@ class YcbineoatReader:
     return color
 
   def get_mask(self,i):
-    mask = cv2.imread(self.color_files[i].replace('rgb','masks'),-1)
+    mask_path = self.color_files[i].replace('rgb','masks')
+    mask = cv2.imread(mask_path,-1)
+    try:
+        print(f"Shape of the mask: {mask.shape}")
+    except AttributeError:
+        print(f"Failed to read the mask from {mask_path}")
+        return None
+
     if len(mask.shape)==3:
-      for c in range(3):
-        if mask[...,c].sum()>0:
-          mask = mask[...,c]
-          break
+        for c in range(3):
+            if mask[...,c].sum()>0:
+                mask = mask[...,c]
+                break
     mask = cv2.resize(mask, (self.W,self.H), interpolation=cv2.INTER_NEAREST).astype(bool).astype(np.uint8)
     return mask
 

@@ -6,6 +6,11 @@
 # distribution of this software and related documentation without an express
 # license agreement from NVIDIA CORPORATION is strictly prohibited.
 
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
 
 from estimater import *
 from datareader import *
@@ -15,12 +20,15 @@ import argparse
 if __name__=='__main__':
   parser = argparse.ArgumentParser()
   code_dir = os.path.dirname(os.path.realpath(__file__))
-  parser.add_argument('--mesh_file', type=str, default=f'{code_dir}/demo_data/kinect_driller_seq/mesh/textured_mesh.obj')
-  parser.add_argument('--test_scene_dir', type=str, default=f'{code_dir}/demo_data/kinect_driller_seq')
+  script_dir = os.path.dirname(os.path.abspath(__file__))
+  data_dir = os.path.join(script_dir, "data/glue")
+  mesh_file = os.path.join(data_dir, "mesh/scaled_down_file.obj")
+  parser.add_argument('--mesh_file', type=str, default=f'{data_dir}/mesh/scaled_down_file.obj')
+  parser.add_argument('--test_scene_dir', type=str, default=data_dir)
   parser.add_argument('--est_refine_iter', type=int, default=5)
   parser.add_argument('--track_refine_iter', type=int, default=2)
   parser.add_argument('--debug', type=int, default=1)
-  parser.add_argument('--debug_dir', type=str, default=f'{code_dir}/debug')
+  parser.add_argument('--debug_dir', type=str, default=f'{data_dir}/debug')
   args = parser.parse_args()
 
   set_logging_format()
@@ -30,7 +38,7 @@ if __name__=='__main__':
 
   debug = args.debug
   debug_dir = args.debug_dir
-  os.system(f'rm -rf {debug_dir}/* && mkdir -p {debug_dir}/track_vis {debug_dir}/ob_in_cam')
+  os.system(f'rm -rf {debug_dir}/* && mkdir -p {data_dir}/track_vis {data_dir}/ob_in_cam')
 
   to_origin, extents = trimesh.bounds.oriented_bounds(mesh)
   bbox = np.stack([-extents/2, extents/2], axis=0).reshape(2,3)

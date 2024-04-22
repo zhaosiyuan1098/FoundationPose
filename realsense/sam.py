@@ -6,8 +6,18 @@ import sys
 import os
 
 sam_checkpoint = "/home/siyuan/code/segment-anything/sam_vit_h_4b8939.pth"
-masks_dir="data/realsense/masks"
-os.makedirs(masks_dir, exist_ok=True)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+data_dir = os.path.join(script_dir, "data/glue")
+masks_dir = os.path.join(data_dir, "masks")
+rgb_dir = os.path.join(data_dir, "rgb")
+if not os.path.exists(rgb_dir):
+    print("Please put some images in the rgb folder")
+    sys.exit(1)
+if not os.path.exists(masks_dir):
+    os.makedirs(masks_dir)
+image_files = sorted(os.listdir(rgb_dir), key=lambda x: os.path.getctime(os.path.join(rgb_dir, x)))
+image_path = os.path.join(rgb_dir, image_files[0])
+image = cv2.imread(image_path)
 
 
 
@@ -31,7 +41,6 @@ def show_box(box, ax):
     w, h = box[2] - box[0], box[3] - box[1]
     ax.add_patch(plt.Rectangle((x0, y0), w, h, edgecolor='green', facecolor=(0,0,0,0), lw=2))    
 
-image = cv2.imread('data/realsense/rgb/272.png')
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 plt.figure(figsize=(10,10))
@@ -53,7 +62,7 @@ predictor = SamPredictor(sam)
 
 predictor.set_image(image)
 
-input_point = np.array([[300,200]])
+input_point = np.array([[220,200]])
 input_label = np.array([1])
 
 
@@ -90,7 +99,7 @@ for i, (mask, score) in enumerate(zip(masks, scores)):
     cv2.destroyAllWindows()
 
     if key == ord('s'):
-        cv2.imwrite(os.path.join(masks_dir, '{}.png'.format(i)), binary_mask)
+        cv2.imwrite(os.path.join(masks_dir, '0000001.png'), binary_mask)
 
 # for i, mask in enumerate(masks):
 #     mask_image = (mask * 255).astype(np.uint8)
