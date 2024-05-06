@@ -15,7 +15,7 @@ import os
 
 # Get the absolute path to the subfolder
 script_dir = os.path.dirname(os.path.abspath(__file__))
-save_dir = os.path.join(script_dir, "data/glue")
+save_dir = os.path.join(script_dir, "data/mouse_1280")
 
 # Create a pipeline
 pipeline = rs.pipeline()
@@ -39,12 +39,12 @@ if not found_rgb:
     print("The demo requires Depth camera with Color sensor")
     exit(0)
 
-config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+config.enable_stream(rs.stream.depth, 1280, 720, rs.format.z16, 30)
 
 if device_product_line == "L500":
     config.enable_stream(rs.stream.color, 960, 540, rs.format.bgr8, 30)
 else:
-    config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
+    config.enable_stream(rs.stream.color, 1280, 720, rs.format.bgr8, 30)
 
 # Start streaming
 profile = pipeline.start(config)

@@ -7,7 +7,7 @@ import os
 
 sam_checkpoint = "/home/siyuan/code/segment-anything/sam_vit_h_4b8939.pth"
 script_dir = os.path.dirname(os.path.abspath(__file__))
-data_dir = os.path.join(script_dir, "data/glue")
+data_dir = os.path.join(script_dir, "data/mouse_1280")
 masks_dir = os.path.join(data_dir, "masks")
 rgb_dir = os.path.join(data_dir, "rgb")
 if not os.path.exists(rgb_dir):
@@ -19,7 +19,7 @@ image_files = sorted(os.listdir(rgb_dir), key=lambda x: os.path.getctime(os.path
 image_path = os.path.join(rgb_dir, image_files[0])
 image = cv2.imread(image_path)
 
-
+input_point = np.array([[550,400]])
 
 def show_mask(mask, ax, random_color=False):
     if random_color:
@@ -62,7 +62,7 @@ predictor = SamPredictor(sam)
 
 predictor.set_image(image)
 
-input_point = np.array([[220,200]])
+
 input_label = np.array([1])
 
 

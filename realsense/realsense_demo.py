@@ -21,7 +21,7 @@ if __name__=='__main__':
   parser = argparse.ArgumentParser()
   code_dir = os.path.dirname(os.path.realpath(__file__))
   script_dir = os.path.dirname(os.path.abspath(__file__))
-  data_dir = os.path.join(script_dir, "data/glue")
+  data_dir = os.path.join(script_dir, "data/mouse_stand_1280")
   mesh_file = os.path.join(data_dir, "mesh/scaled_down_file.obj")
   parser.add_argument('--mesh_file', type=str, default=f'{data_dir}/mesh/scaled_down_file.obj')
   parser.add_argument('--test_scene_dir', type=str, default=data_dir)
