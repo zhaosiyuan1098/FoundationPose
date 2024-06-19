@@ -58,6 +58,7 @@ eg：
     --device /dev/video5:/dev/video5 \
     --env NVIDIA_DISABLE_REQUIRE=1 -it --network=host --name foundationpose \
     --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
+    -v /home/siyuan/code/segment-anything/sam_vit_h_4b8939.pth:/sam.pth \
     -v /home/siyuan/code/fouda_test/FoundationPose:/foundation \
     -v /mnt:/mnt \
     -v /tmp/.X11-unix:/tmp/.X11-unix \

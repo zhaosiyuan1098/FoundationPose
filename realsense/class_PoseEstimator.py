@@ -5,12 +5,14 @@ import numpy as np
 import cv2
 import imageio
 import numpy as np
+
+sys.path.append('/home/siyuan/code/fouda_test/FoundationPose')
 from estimater import *
 from datareader import *
 
 import matplotlib.pyplot as plt
 
-sys.path.append('/home/siyuan/code/FoundationPose')
+
 
 
 class PoseEstimation:

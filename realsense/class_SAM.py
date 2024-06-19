@@ -45,7 +45,7 @@ class SAMInference:
                 cv2.imwrite(os.path.join(self.masks_dir, f'mask_{i+1}.png'), binary_mask)  # 保存掩码图像
 
 def main():
-    sam_checkpoint = "/home/siyuan/code/segment-anything/sam_vit_h_4b8939.pth"  # SAM模型的检查点路径
+    sam_checkpoint = "/sam.pth"  # SAM模型的检查点路径
     script_dir = os.path.dirname(os.path.abspath(__file__))  # 获取当前脚本所在的目录路径
     data_dir = os.path.join(script_dir, "data/mouse_1280")  # 数据目录路径
     masks_dir = os.path.join(data_dir, "masks")  # 保存掩码图像的目录路径

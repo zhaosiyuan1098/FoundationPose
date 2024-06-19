@@ -92,8 +92,12 @@ class RealSenseRecorder:
                     cv2.imwrite(os.path.join(self.save_dir, "rgb_unaligned", f"{timestamp}.png"), unaligned_color_image)
 
                 # 显示图像
+                depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
+                images = np.hstack((color_image, depth_colormap))
+
                 cv2.namedWindow('Align Example', cv2.WINDOW_NORMAL)
-                cv2.imshow('Align Example', bg_removed)
+                cv2.imshow('Align Example', images)
+
                 key = cv2.waitKey(1)
 
                 # 's'键被按下 - 开始/停止录制
